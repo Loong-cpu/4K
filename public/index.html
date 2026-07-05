@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>长资源 - 高清影视资源导航站</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- ===== 顶部导航栏 ===== -->
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='36' viewBox='0 0 120 36'%3E%3Crect width='120' height='36' rx='6' fill='%23e50914'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='16' font-weight='bold' font-family='sans-serif'%3E%E9%95%BF%E8%B5%84%E6%BA%90%3C/text%3E%3C/svg%3E" alt="长资源">
+    </a>
+    <nav class="main-nav">
+      <a href="#" class="nav-link active" data-type="">首页</a>
+      <a href="#" class="nav-link" data-type="1">豆瓣电影Top250</a>
+      <a href="#" class="nav-link" data-type="1">最新电影</a>
+      <a href="#" class="nav-link" data-type="24">剧场版</a>
+      <a href="#" class="nav-link" data-type="15">国产剧</a>
+      <a href="#" class="nav-link" data-type="2">美剧</a>
+      <a href="#" class="nav-link" data-type="16">韩剧</a>
+      <a href="#" class="nav-link" data-type="22">番剧</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box">
+        <input type="text" placeholder="电影名称/明星/导演/年份" id="searchInput">
+        <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
+      </div>
+      <a href="#" class="login-btn">登录</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 搜索结果弹窗 ===== -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<!-- ===== 在线播放器 ===== -->
+<div class="player-overlay" id="playerOverlay">
+  <div class="player-panel">
+    <div class="player-header">
+      <div class="player-info">
+        <h3 id="playerTitle">加载中...</h3>
+        <span id="playerYear"></span>
+      </div>
+      <div class="player-controls">
+        <select id="sourceSelect" class="source-select">
+          <option value="0">📺 第一源</option>
+          <option value="1">📺 第二源</option>
+          <option value="2">📺 第三源</option>
+          <option value="3">📺 第四源</option>
+          <option value="4">🔍 豆瓣搜索</option>
+        </select>
+        <button class="close-btn" id="closePlayer"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div class="player-body">
+      <iframe id="playerIframe" frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+      <div class="player-hint">💡 如果当前源无法播放，请切换到其他源或查看豆瓣搜索结果</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 轮播推荐区 ===== -->
+<section class="hero-carousel">
+  <div class="carousel-container">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-slide active">
+        <div class="slide-bg" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);"></div>
+        <div class="slide-content">
+          <span class="slide-tag">热播</span>
+          <h2 id="heroTitle">加载中...</h2>
+          <p class="slide-desc" id="heroDesc"></p>
+          <p class="slide-meta" id="heroMeta"></p>
+          <div class="slide-actions">
+            <button class="btn-play" id="heroPlay"><i class="fas fa-play"></i> 立即播放</button>
+            <button class="btn-detail" id="heroDetail"><i class="fas fa-info-circle"></i> 详情</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-indicators" id="carouselIndicators"></div>
+    <button class="carousel-arrow prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+    <button class="carousel-arrow next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</section>
+
+<!-- ===== 近日更新 ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">近日更新</h2>
+      <a href="#" class="section-more">更多 <i class="fas fa-angle-double-right"></i></a>
+    </div>
+    <div class="card-grid" id="recentGrid">
+      <div class="loading-spinner"><div class="spinner"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 热门推荐 ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">热门推荐</h2>
+      <a href="#" class="section-more">更多 <i class="fas fa-angle-double-right"></i></a>
+    </div>
+    <div class="card-grid" id="hotGrid">
+      <div class="loading-spinner"><div class="spinner"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 分类浏览 ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">分类浏览</h2>
+    </div>
+    <div class="category-tags">
+      <a href="#" class="cat-tag" data-type="15">国产剧</a>
+      <a href="#" class="cat-tag" data-type="2">美剧</a>
+      <a href="#" class="cat-tag" data-type="16">韩剧</a>
+      <a href="#" class="cat-tag" data-type="14">日剧</a>
+      <a href="#" class="cat-tag" data-type="23">港剧</a>
+      <a href="#" class="cat-tag" data-type="22">动画</a>
+      <a href="#" class="cat-tag" data-type="25">综艺</a>
+      <a href="#" class="cat-tag" data-type="21">纪录片</a>
+      <a href="#" class="cat-tag" data-type="1">电影</a>
+      <a href="#" class="cat-tag" data-type="24">网大</a>
+      <a href="#" class="cat-tag" data-type="35">短剧</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 页脚 ===== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#">关于我们</a>
+      <a href="#">联系方式</a>
+      <a href="#">免责声明</a>
+      <a href="#">隐私政策</a>
+      <a href="#">友情链接</a>
+      <a href="#">站点地图</a>
+    </div>
+    <p class="footer-note">本站所有内容均来自互联网分享站点所提供的公开引用资源，未制作、未存储、传播、发布任何视频。如有侵犯您的权益请来信告知，我们将及时删除。</p>
+    <p class="footer-copyright">&copy; 2026 长资源 - 高清影视资源导航站</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
