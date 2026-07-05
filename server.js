@@ -12,11 +12,11 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+module.exports = app;
+
 // 只在非 serverless 环境下启动 HTTP 服务器
-if (typeof process.versions !== 'undefined' && !process.env.VERCEL) {
+if (typeof process.env.VERCEL === 'undefined') {
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
   });
 }
-
-module.exports = app;
